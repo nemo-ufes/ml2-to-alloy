@@ -1,0 +1,40 @@
+module taxonomy {
+	
+	order 3 class TaxonomicRank {};
+	
+	order 2 class Taxon {
+		ref taxonAuthor: Person
+	};
+	
+	order 2 class Species : TaxonomicRank specializes Taxon {
+		population: Number
+		status: String
+	};
+	
+	order 2 class AnimalSpecies specializes Species categorizes Animal {
+		regularity instancesAreWarmblooded: Boolean determinesValue isWarmblooded
+	};
+	
+	class Organism {
+		weight: Number
+	};
+	
+	class Person {
+		name: String
+	};
+	
+	class Animal : Species specializes Organism {
+		isWarmblooded: Boolean
+	};
+	
+	class Lion : AnimalSpecies specializes Animal {
+		instancesAreWarmblooded = true
+		ref taxonAuthor = CarlLinnaeus	
+	};
+	
+	individual Cecil : Lion {};
+	
+	individual CarlLinnaeus : Person {
+		name = "Carl Linnaeus"
+	};
+}
