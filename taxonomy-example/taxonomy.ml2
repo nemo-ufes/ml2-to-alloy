@@ -23,7 +23,7 @@ module taxonomy {
 		name: String
 	};
 	
-	class Animal : Species specializes Organism {
+	class Animal specializes Organism {
 		isWarmblooded: Boolean
 	};
 	

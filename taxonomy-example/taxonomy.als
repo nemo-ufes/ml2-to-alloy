@@ -12,6 +12,8 @@ fact TaxonomicRankReifiedDefinition {
 	all e: Entity | e in TaxonomicRankReified iff (all e': Entity | iof[e',e] iff e' in TaxonomicRank)
 }
 
+
+
 sig Taxon in Order1Type {
 	taxonAuthor: Person
 }
@@ -22,6 +24,9 @@ one sig TaxonReified in Order2Type {
 fact TaxonReifiedDefinition {
 	all e: Entity | e in TaxonReified iff (all e': Entity | iof[e',e] iff e' in Taxon)
 }
+
+
+
 
 sig Species in Taxon {
 	population: Int,
@@ -34,6 +39,10 @@ one sig SpeciesReified in TaxonomicRank {
 fact SpeciesReifiedDefinition {
 	all e: Entity | e in SpeciesReified iff (all e': Entity | iof[e',e] iff e' in Species)
 }
+
+
+
+
 
 sig AnimalSpecies in Species {
 	instancesAreWarmblooded: Boolean
@@ -50,6 +59,13 @@ fact AnimalSpeciesReifiedDefinition {
 	all e: Entity | e in AnimalSpeciesReified iff (all e': Entity | iof[e',e] iff e' in AnimalSpecies)
 }
 
+fact instancesAreWarmbloodedRegulatesisWarmblooded {
+	all x: Animal, y: AnimalSpecies | 
+		(iof[x,y] and some y.instancesAreWarmblooded) implies x.isWarmblooded = y.instancesAreWarmblooded
+}
+
+
+
 sig Organism in Individual {
 	weight: Int
 }
@@ -60,6 +76,9 @@ one sig OrganismReified in Order1Type {
 fact OrganismReifiedDefinition {
 	all e: Entity | e in OrganismReified iff (all e': Entity | iof[e',e] iff e' in Organism)
 }
+
+
+
 
 sig Person in Individual {
 	name: String
@@ -72,16 +91,22 @@ fact PersonReifiedDefinition {
 	all e: Entity | e in PersonReified iff (all e': Entity | iof[e',e] iff e' in Person)
 }
 
+
+
+
 sig Animal in Organism {
 	isWarmblooded: Boolean
 }
 
-one sig AnimalReified in Species {
+one sig AnimalReified in Order1Type {
 }
 
 fact AnimalReifiedDefinition {
 	all e: Entity | e in AnimalReified iff (all e': Entity | iof[e',e] iff e' in Animal)
 }
+
+
+
 
 sig Lion in Animal {
 }
@@ -95,9 +120,7 @@ fact LionReifiedDefinition {
 	all e: Entity | e in LionReified iff (all e': Entity | iof[e',e] iff e' in Lion)
 }
 
-fact instancesAreWarmbloodedRegulatesisWarmblooded {
-	all x: Lion | x.isWarmblooded = LionReified.instancesAreWarmblooded
-}
+
 
 one sig Cecil in Lion {
 }
